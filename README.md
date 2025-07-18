@@ -1,1 +1,1 @@
-# Caso Práctico 2 - Infraestructura Azure con Terraform y AKS
+# Caso Práctico 2: Automatización de Despliegues en Azure
