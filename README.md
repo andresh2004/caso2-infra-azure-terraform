@@ -114,6 +114,6 @@ El uso y reproducción queda restringido a contextos educativos. No se permite s
 
 ## 👨‍💻 Autor
 
-- Nombre: [Tu nombre aquí]
+- Nombre: Carlos Andres Herrera Gonzalez
 - Curso: DevOps & Cloud – UNIR
-- Fecha: Julio 2025
+- Fecha: 26 de Julio 2025
