@@ -1,1 +1,0 @@
-# Dockerfile para app Podman
