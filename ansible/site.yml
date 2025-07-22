@@ -1,0 +1,33 @@
+# ───────────────
+# Despliegue base en la VM (Podman, Nginx, Auth, ACR login)
+# ───────────────
+- name: Configuración final para entrega práctica
+  hosts: all
+  become: true
+  tags: vm
+  roles:
+    - rol_acr_login
+    - rol_pull_imagen
+    - rol_podman_systemd
+    - rol_auth_basic
+
+# ───────────────
+# Crear AKS desde el controlador
+# ───────────────
+- name: Crear AKS y configurar kubeconfig
+  hosts: localhost
+  gather_facts: false
+  tags: crear_aks
+  roles:
+    - rol_crear_aks
+
+# ───────────────
+# Despliegue de aplicación en AKS
+# ───────────────
+- name: Despliegue de aplicación en AKS
+  hosts: localhost
+  gather_facts: false
+  tags: aks
+  roles:
+    - aks
+

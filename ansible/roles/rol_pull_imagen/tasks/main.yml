@@ -1,0 +1,2 @@
+- name: Hacer pull de imagen desde ACR
+  shell: podman pull {{ acr_login_server }}/nginx_seguro:casopractico2

@@ -1,0 +1,59 @@
+{
+    "chunks": [
+        {
+            "type": "txt",
+            "chunk_number": 1,
+            "lines": [
+                {
+                    "line_number": 1,
+                    "text": "apiVersion: v1"
+                },
+                {
+                    "line_number": 2,
+                    "text": "kind: Service"
+                },
+                {
+                    "line_number": 3,
+                    "text": "metadata:"
+                },
+                {
+                    "line_number": 4,
+                    "text": "name: mi-app-service"
+                },
+                {
+                    "line_number": 5,
+                    "text": "spec:"
+                },
+                {
+                    "line_number": 6,
+                    "text": "type: LoadBalancer"
+                },
+                {
+                    "line_number": 7,
+                    "text": "selector:"
+                },
+                {
+                    "line_number": 8,
+                    "text": "app: mi-app"
+                },
+                {
+                    "line_number": 9,
+                    "text": "ports:"
+                },
+                {
+                    "line_number": 10,
+                    "text": "- protocol: TCP"
+                },
+                {
+                    "line_number": 11,
+                    "text": "port: 8080"
+                },
+                {
+                    "line_number": 12,
+                    "text": "targetPort: 80"
+                }
+            ],
+            "token_count": 27
+        }
+    ]
+}

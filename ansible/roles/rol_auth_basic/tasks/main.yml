@@ -1,0 +1,26 @@
+- name: Instalar apache2-utils para htpasswd
+  apt:
+    name: apache2-utils
+    state: present
+    update_cache: true
+
+- name: Crear archivo htpasswd
+  shell: htpasswd -bc /home/andresdev/.htpasswd {{ web_user }} {{ web_password }}
+  args:
+    creates: /home/andresdev/.htpasswd
+
+- name: Inyectar autenticación básica en nginx.conf
+  blockinfile:
+    path: /opt/app/nginx.conf
+    marker: "# {mark} ANSIBLE AUTH BASIC"
+    block: |
+      auth_basic "Restricción";
+      auth_basic_user_file /etc/nginx/.htpasswd;
+
+- name: Reiniciar contenedor Nginx (mi_app_container_v2)
+  ansible.builtin.command: podman restart mi_app_container_v2
+  register: restart_result
+  changed_when: restart_result.rc == 0
+  become: true
+
+

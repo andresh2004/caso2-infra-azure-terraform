@@ -1,0 +1,12 @@
+- name: Despliegue de la aplicación web con Podman
+  hosts: podman
+  become: true
+  tasks:
+    - name: Ejecutar contenedor con Nginx SSL en Podman
+      containers.podman.podman_container:
+        name: mi_app_seguro
+        image: localhost/mi_app_ssl
+        state: started
+        ports:
+          - "8443:443"
+        restart_policy: always

@@ -1,0 +1,7 @@
+---
+- name: Desplegar contenedor de la aplicación
+  hosts: podman
+  become: true
+
+  roles:
+    - rol_aplicacion

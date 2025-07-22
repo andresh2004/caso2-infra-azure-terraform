@@ -1,0 +1,54 @@
+- name: Crear espacio de nombres (namespace)
+  kubernetes.core.k8s:
+    state: present
+    kind: Namespace
+    name: app-secundaria
+
+- name: Crear Secret con credenciales de ACR
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/acr-secret.yml') | from_yaml }}"
+
+- name: Crear PVC
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/pvc.yml') | from_yaml }}"
+
+- name: Desplegar Deployment
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/deployment.yml') | from_yaml }}"
+
+- name: Crear Service tipo LoadBalancer
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', 'files/service.yml') | from_yaml }}"
+
+- name: Generar archivo dockerconfigjson
+  template:
+    src: dockerconfigjson.j2
+    dest: /tmp/.dockerconfigjson
+
+- name: Crear imagePullSecret en AKS para acceder al ACR
+  kubernetes.core.k8s:
+    state: present
+    namespace: default
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: acr-secret
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: "{{ lookup('file', '/tmp/.dockerconfigjson') | b64encode }}"
+
+- name: Renderizar manifest YAML para la app
+  template:
+    src: deployment_app.yml.j2
+    dest: /tmp/deployment_app.yml
+
+- name: Desplegar aplicación en AKS con PVC e imagePullSecret
+  kubernetes.core.k8s:
+    kubeconfig: ~/.kube/config
+    src: /tmp/deployment_app.yml
+    state: present

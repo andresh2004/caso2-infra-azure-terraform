@@ -1,0 +1,26 @@
+- name: Asegurar dependencias requeridas
+  become: true
+  apt:
+    name:
+      - software-properties-common
+      - uidmap
+      - slirp4netns
+    state: present
+    update_cache: yes
+
+- name: Instalar Podman desde los repos oficiales de Ubuntu
+  become: true
+  apt:
+    name: podman
+    state: present
+    update_cache: yes
+
+- name: Verificar que podman se haya instalado correctamente
+  become: true
+  command: podman --version
+  register: podman_version
+  changed_when: false
+
+- name: Mostrar versión de Podman
+  debug:
+    msg: "Versión instalada de Podman: {{ podman_version.stdout }}"

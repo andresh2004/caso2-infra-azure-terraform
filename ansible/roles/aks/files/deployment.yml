@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-secundaria
+  namespace: app-secundaria
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-secundaria
+  template:
+    metadata:
+      labels:
+        app: app-secundaria
+    spec:
+      containers:
+        - name: app
+          image: acrpracticoandres.azurecr.io/otra_app:casopractico2
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: "/data"
+              name: vol-pvc
+      imagePullSecrets:
+        - name: acr-auth
+      volumes:
+        - name: vol-pvc
+          persistentVolumeClaim:
+            claimName: pvc-datos

@@ -1,0 +1,5 @@
+- name: Instalación de Podman en la VM
+  hosts: podman
+  become: true
+  roles:
+    - rol_podman

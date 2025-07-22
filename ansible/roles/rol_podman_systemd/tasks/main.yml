@@ -1,0 +1,24 @@
+- name: Verificar si ya existe el contenedor
+  command: podman container exists mi_app_container_v2
+  register: container_exists
+  ignore_errors: true
+
+- name: Crear contenedor desde imagen del ACR si no existe
+  shell: podman run -d --name mi_app_container_v2 -p 8444:443 -v /home/andresdev/.htpasswd:/etc/nginx/.htpasswd:ro -v /home/andresdev/caso_practico_2/nginx_podman/nginx.conf:/etc/nginx/nginx.conf:ro -v /home/andresdev/caso_practico_2/nginx_podman/certs/cert.pem:/etc/nginx/cert.pem:ro -v /home/andresdev/caso_practico_2/nginx_podman/certs/key.pem:/etc/nginx/key.pem:ro {{ acr_login_server }}/nginx_seguro:casopractico2
+  when: container_exists.rc != 0
+
+- name: Generar servicio systemd
+  shell: podman generate systemd --name mi_app_container_v2 -f --restart-policy always
+  args:
+    chdir: /home/andresdev
+
+- name: Mover servicio a systemd
+  shell: mv container-mi_app_container_v2.service /etc/systemd/system/mi_app_container_v2.service
+
+- name: Habilitar y arrancar el servicio
+  systemd:
+    name: mi_app_container_v2
+    enabled: true
+    state: started
+    daemon_reload: true
+

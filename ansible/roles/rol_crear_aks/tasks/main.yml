@@ -1,0 +1,55 @@
+# rol_crear_aks/tasks/main.yml
+
+- name: Crear cluster AKS (registrar salida)
+  azure.azcollection.azure_rm_aks:
+    name: aks-andres
+    resource_group: rg-caso2-andres
+    dns_prefix: aksandres
+    kubernetes_version: '1.28.5'
+    agent_pool_profiles:
+      - name: default
+        count: 1
+        vm_size: Standard_DS2_v2
+        os_type: Linux
+    linux_profile:
+      admin_username: azureuser
+      ssh_key:
+        key_data: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    location: eastus
+    enable_rbac: true
+    tags:
+      environment: casopractico2
+    state: present
+  register: aks_cluster
+
+- name: Esperar estabilidad del cluster
+  ansible.builtin.pause:
+    seconds: 45
+
+- name: Obtener información del ACR
+  azure.azcollection.azure_rm_containerregistry_info:
+    name: acrpracticoandres
+    resource_group: rg-caso2-andres
+  register: acr_info
+
+- name: Asignar rol AcrPull al AKS para acceso al ACR
+  azure.azcollection.azure_rm_roleassignment:
+    scope: "{{ acr_info.azure_containerregistries[0].id }}"
+    role_definition_name: AcrPull
+    principal_id: "{{ aks_cluster.kubelet_identity[0].object_id }}"
+
+- name: Obtener kubeconfig del cluster AKS
+  ansible.builtin.command: >-
+    az aks get-credentials \
+      --resource-group rg-caso2-andres \
+      --name aks-andres \
+      --overwrite-existing
+  register: creds_out
+  changed_when: "'Updated' in creds_out.stdout or creds_out.rc == 0"
+
+- name: Verificar acceso a nodos AKS
+  ansible.builtin.command: kubectl get nodes --no-headers
+  register: nodes_out
+  changed_when: false
+
+

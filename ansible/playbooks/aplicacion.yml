@@ -1,0 +1,6 @@
+---
+- name: Despliegue de Aplicación Web
+  hosts: podman
+  become: yes
+  roles:
+    - rol_aplicacion

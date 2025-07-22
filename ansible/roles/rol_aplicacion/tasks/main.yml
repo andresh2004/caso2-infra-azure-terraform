@@ -1,0 +1,37 @@
+---
+- name: Crear directorio de la aplicación
+  file:
+    path: /opt/app
+    state: directory
+    mode: '0755'
+
+- name: Copiar Dockerfile y archivos de app
+  copy:
+    src: app/
+    dest: /opt/app/
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Construir imagen de la app
+  command: podman build -t mi_app /opt/app
+  args:
+    chdir: /opt/app
+
+- name: Eliminar contenedor anterior si existe
+  shell: podman rm -f mi_app_container || true
+  changed_when: false    # no marca “changed” si no había nada que borrar
+
+- name: Ejecutar contenedor de la app
+  command: podman run -d --name mi_app_container -p 8080:80 mi_app
+  args:
+    chdir: /opt/app
+  ignore_errors: true  # Evita fallo si ya existe el contenedor
+
+- name: Verificar que el contenedor esté corriendo
+  command: podman ps
+  register: contenedores
+
+- name: Mostrar contenedores activos
+  debug:
+    var: contenedores.stdout_lines

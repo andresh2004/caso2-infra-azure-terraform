@@ -1,0 +1,5 @@
+- name: Iniciar sesión en Azure ACR
+  shell: |
+    podman login {{ acr_login_server }} -u {{ acr_username }} -p {{ acr_password }}
+  environment:
+    PATH: "/usr/bin:/usr/local/bin"
