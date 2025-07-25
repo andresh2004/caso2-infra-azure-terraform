@@ -1,0 +1,45 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.0.6" pages="2">
+  <diagram name="Despliegue Kubernetes" id="K8s">
+    <mxGraphModel dx="786" dy="417" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" value="Usuario" style="shape=man;" parent="1" vertex="1">
+          <mxGeometry x="20" y="60" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ingress" value="Ingress Controller" style="shape=hexagon;" parent="1" vertex="1">
+          <mxGeometry x="120" y="60" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" value="Service (LoadBalancer)" style="shape=mxgraph.azure.networking.load_balancer;" parent="1" vertex="1">
+          <mxGeometry x="280" y="60" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="deployment" value="Deployment (App)" style="shape=cube;" parent="1" vertex="1">
+          <mxGeometry x="460" y="60" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pv" value="Persistent Volume" style="shape=ellipse;" parent="1" vertex="1">
+          <mxGeometry x="640" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="line1" style="endArrow=block" parent="1" source="user" target="ingress" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="line2" style="endArrow=block" parent="1" source="ingress" target="svc" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="line3" style="endArrow=block" parent="1" source="svc" target="deployment" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="line4" style="endArrow=block" parent="1" source="deployment" target="pv" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="DBxdKavhS0eoY3pW_WSU" name="Página-2">
+    <mxGraphModel dx="786" dy="417" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

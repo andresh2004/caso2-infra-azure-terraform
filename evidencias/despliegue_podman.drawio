@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Despliegue Podman" id="Podman">
+    <mxGraphModel dx="1270" dy="794" grid="1" gridSize="10">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="user" value="Usuario" style="shape=man;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="80" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="vm" value="VM Linux" style="shape=mxgraph.azure.compute;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="60" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="container" value="Contenedor Web (Nginx/Apache)" style="shape=cube;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="60" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="line1" style="endArrow=block" edge="1" parent="1" source="user" target="vm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="line2" style="endArrow=block" edge="1" parent="1" source="vm" target="container">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
