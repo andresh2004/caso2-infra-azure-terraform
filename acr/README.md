@@ -1,16 +1,16 @@
 # Azure Container Registry (ACR)
 
-Este módulo documenta el proceso de autenticación, construcción y publicación de imágenes en el ACR `acrpracticoandres`.
+Esta carpeta contiene los recursos necesarios para subir imágenes de contenedores al ACR.
 
-## Imagen publicada
-- Repositorio: `nginx_seguro`
-- Tag: `casopractico2`
-- SHA: `sha256:8f88129bbd...`
-- Fecha: 13/07/2025
+## Estructura
 
-## Scripts
-- `login-acr.sh`: autenticación con Azure y login al ACR
-- `build-push.sh`: construcción y push de imagen desde Podman
+- `podman/`: scripts y archivos relacionados a la imagen utilizada en la aplicación desplegada sobre VM con Podman.
+- `aks/`: scripts para la imagen desplegada en Kubernetes (AKS).
 
-## Evidencia visual
-Ver `evidencia-acr.png` incluida.
+## Versión de las imágenes
+
+Todas las imágenes están etiquetadas con el tag: `casopractico2`
+
+## Evidencias
+
+Se incluye la captura `evidencia-acr.png` como prueba de que ambas imágenes fueron empujadas correctamente al registro privado de Azure.
